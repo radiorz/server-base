@@ -2,7 +2,6 @@ import express from "express";
 import { captchaGenerator, captchaValidator } from "../lib";
 import session from "express-session";
 const app = express();
-app.use(express.json());
 app.use(
   session({
     secret: "keyboard cat",
@@ -12,7 +11,7 @@ app.use(
 );
 
 app.get("/captcha", captchaGenerator());
-app.post("/verify", captchaValidator(), (req, res) => {
+app.post("/verify", express.json(), captchaValidator(), (req, res) => {
   console.log(`123`, 123);
   res.send("success");
 });
