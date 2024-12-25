@@ -30,7 +30,8 @@ export const captchaGenerator = (
     // 存储
     req.session.captcha = result?.text;
     // 返回数据
-    res.type("svg").send(result?.data);
+    res.type("svg")
+    res.send(result?.data);
   };
 };
 export interface CaptchaValidatorOptions {

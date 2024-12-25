@@ -14,12 +14,14 @@ export const captchaCreateDefaultOptions: CaptchaCreateOptions = Object.freeze({
 export function createCaptcha(
   options?: Partial<typeof captchaCreateDefaultOptions>
 ): CaptchaObj {
-  const { type, ...opts } = Object.assign(captchaCreateDefaultOptions, options);
+  const { type, reChars, ...opts } = Object.assign(
+    captchaCreateDefaultOptions,
+    options
+  );
   // 如果出现 0o1i等字样的重新
-  const reCreationChars = opts.reChars.split(" ");
   let data: any,
     text: string = "";
-  while (!text && reCreationChars.includes(text)) {
+  while (!text || reChars.includes(text)) {
     const value =
       type === "text"
         ? svgCaptcha.create(opts)

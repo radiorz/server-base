@@ -6,8 +6,8 @@ export default defineConfig((options: any) => ({
   // 不直接指定index 是为了支持直接使用某个文件
   entry: [`lib/**/*.ts`, '!lib/**/*.test.ts'],
   // 格式化
-  format: ['cjs', 'esm'],
   // typescript 注释
+  format: ['cjs', 'esm'],
   dts: true,
   // 拆分
   splitting: false,
