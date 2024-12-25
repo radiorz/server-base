@@ -11,6 +11,9 @@ export const captchaCreateDefaultOptions: CaptchaCreateOptions = Object.freeze({
   color: true, // 验证码字符颜色
   background: "#fff", // 背景色
 });
+// 默认的 char preset
+export const charPreset =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 export function createCaptcha(
   options?: Partial<typeof captchaCreateDefaultOptions>
 ): CaptchaObj {
@@ -18,8 +21,6 @@ export function createCaptcha(
     captchaCreateDefaultOptions,
     options
   );
-  const charPreset =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const ignoredCharPreset = removeCharacters(charPreset, charPresetIgnore);
   // 这里由于同时升成 svg 和 text 所以会有一定的性能消耗
   const result =
