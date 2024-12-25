@@ -17,20 +17,22 @@ export const captchaGenerator = (
     let result: CaptchaObj | null = null;
     try {
       result = createCaptcha(options);
-    } catch (error) {
+    } catch (error: any) {
       res.status(500).json({
-        message: error,
+        message: error?.message,
       });
+      return;
     }
     if (!result) {
       res.status(500).json({
         message: "captcha create failed",
       });
+      return;
     }
     // 存储
     req.session.captcha = result?.text;
     // 返回数据
-    res.type("svg")
+    res.type("svg");
     res.send(result?.data);
   };
 };
@@ -47,6 +49,7 @@ export const captchaValidator = (options?: CaptchaValidatorOptions) => {
       next();
     }
     const captcha = req.session.captcha;
+    delete req.session.captcha;
     const captchaValue = req.body.captcha;
     const result = validateCaptcha({
       captchaText: captcha,

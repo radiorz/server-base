@@ -1,9 +1,5 @@
-import {
-  ConfigObject,
-  CaptchaObj,
-  create,
-  createMathExpr,
-} from "svg-captcha-embed";
+// 由于这个是commonjs写的 所以必须默认导出才没问题。
+import svgCaptcha, { CaptchaObj, ConfigObject } from "svg-captcha-embed";
 import { charPreset } from "./consts";
 import { removeCharacters } from "./utils";
 export interface CaptchaCreateOptions extends ConfigObject {
@@ -30,8 +26,8 @@ export function createCaptcha(
   // 这里由于同时升成 svg 和 text 所以会有一定的性能消耗
   const result =
     type === "text"
-      ? create({ ...opts, charPreset: ignoredCharPreset })
-      : createMathExpr({ ...opts, charPreset: ignoredCharPreset });
+      ? svgCaptcha.create({ ...opts, charPreset: ignoredCharPreset })
+      : svgCaptcha.createMathExpr({ ...opts, charPreset: ignoredCharPreset });
 
   return result;
 }
@@ -45,20 +41,18 @@ class Result {
   constructor(public success: boolean, public error: string | null) {}
 }
 export function validateCaptcha(options: CaptchaValidateOptions) {
-  let result: Result | null = null;
   if (!options.captchaUserInput) {
-    result = new Result(false, "captchaUserInput is required");
+    return new Result(false, "captchaUserInput is required");
   }
   if (!options.captchaText) {
-    result = new Result(false, "captchaText isn't init");
+    return new Result(false, "captchaText isn't init");
   }
   if (options.allowLowerCase) {
     options.captchaText = options.captchaText?.toLowerCase?.();
     options.captchaUserInput = options.captchaUserInput?.toLowerCase?.();
   }
   if (options.captchaText !== options.captchaText) {
-    result = new Result(false, "captcha is incorrect");
+    return new Result(false, "captcha is incorrect");
   }
-  result = new Result(true, null);
-  return result;
+  return new Result(true, null);
 }
