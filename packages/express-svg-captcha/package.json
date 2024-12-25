@@ -1,0 +1,52 @@
+{
+  "name": "@tikkhun/express-svg-captcha",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "nodemon -e tsx ./src/index.ts",
+    "test": "vitest"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "svg-captcha-embed": "^1.4.3"
+  },
+  "peerDependencies": {
+    "express": "^4.21.2",
+    "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.1",
+    "@types/node": "^22.10.2",
+    "express-session": "^1.18.1",
+    "nodemon": "^3.1.9",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "vitest": "^2.1.8"
+  }
+}
