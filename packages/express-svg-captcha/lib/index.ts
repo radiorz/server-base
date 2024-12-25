@@ -18,19 +18,19 @@ export const captchaGenerator = (
     try {
       result = createCaptcha(options);
     } catch (error) {
-      return res.status(500).json({
+      res.status(500).json({
         message: error,
       });
     }
     if (!result) {
-      return res.status(500).json({
+      res.status(500).json({
         message: "captcha create failed",
       });
     }
     // 存储
     req.session.captcha = result?.text;
     // 返回数据
-    return res.type("svg").send(result?.data);
+    res.type("svg").send(result?.data);
   };
 };
 export interface CaptchaValidatorOptions {
@@ -53,9 +53,10 @@ export const captchaValidator = (options?: CaptchaValidatorOptions) => {
       allowLowerCase: options?.allowLowerCase,
     });
     if (!result.success) {
-      return res.status(400).json({
+      res.status(400).json({
         message: result.error,
       });
+      return;
     }
     next();
   };

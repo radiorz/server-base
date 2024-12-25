@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "nodemon -e tsx ./src/index.ts",
+    "dev": "tsx watch ./src/index.ts",
     "test": "vitest"
   },
   "publishConfig": {
