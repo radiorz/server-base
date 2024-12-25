@@ -1,4 +1,11 @@
-import svgCaptcha, { ConfigObject, CaptchaObj } from "svg-captcha-embed";
+import {
+  ConfigObject,
+  CaptchaObj,
+  create,
+  createMathExpr,
+} from "svg-captcha-embed";
+import { charPreset } from "./consts";
+import { removeCharacters } from "./utils";
 export interface CaptchaCreateOptions extends ConfigObject {
   type: "text" | "mathExpr";
   charPresetIgnore: string;
@@ -11,9 +18,7 @@ export const captchaCreateDefaultOptions: CaptchaCreateOptions = Object.freeze({
   color: true, // 验证码字符颜色
   background: "#fff", // 背景色
 });
-// 默认的 char preset
-export const charPreset =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 export function createCaptcha(
   options?: Partial<typeof captchaCreateDefaultOptions>
 ): CaptchaObj {
@@ -25,21 +30,12 @@ export function createCaptcha(
   // 这里由于同时升成 svg 和 text 所以会有一定的性能消耗
   const result =
     type === "text"
-      ? svgCaptcha.create({ ...opts, charPreset: ignoredCharPreset })
-      : svgCaptcha.createMathExpr({ ...opts, charPreset: ignoredCharPreset });
+      ? create({ ...opts, charPreset: ignoredCharPreset })
+      : createMathExpr({ ...opts, charPreset: ignoredCharPreset });
 
   return result;
 }
-export function removeCharacters(
-  original: string,
-  charactersToRemove: string
-): string {
-  // 创建一个正则表达式，匹配要删除的字符
-  const regex = new RegExp("[" + charactersToRemove + "]", "g");
 
-  // 使用正则表达式的replace方法删除所有匹配的字符
-  return original.replace(regex, "");
-}
 export interface CaptchaValidateOptions {
   captchaText?: string;
   captchaUserInput?: string;
